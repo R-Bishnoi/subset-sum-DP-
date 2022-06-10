@@ -1,0 +1,35 @@
+// memoization 
+
+class Solution{   
+public:
+
+ bool solve(vector<int>&arr,int sum,int i , vector<vector<int>>&dp){
+    
+  if(sum==0)return true;
+  if(i==0)return (arr[0]==sum);
+   
+ if(dp[i][sum]!=-1)return dp[i][sum]; 
+   
+     
+   bool not_take = solve(arr,sum,i-1,dp);
+
+  bool take = false;
+  if(sum>=arr[i]) {take = solve(arr,sum-arr[i],i-1,dp);}
+
+  
+  return dp[i][sum]=(take || not_take);    
+ }
+
+
+ bool isSubsetSum(vector<int>arr, int sum){
+       //sort(arr.begin(),arr.end());
+       
+     int n=arr.size();  
+    vector<vector<int>>dp(n,vector<int>(sum+1,-1)); 
+       
+      return solve(arr,sum,n-1,dp);
+    
+    }
+    
+    
+};
